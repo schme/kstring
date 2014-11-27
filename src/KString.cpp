@@ -1,5 +1,4 @@
-#include "kstring.h"
-
+#include "KString.h"
 
 string::string() : size{ INIT_LENGTH }
 {
@@ -19,8 +18,10 @@ string::~string() {
 }
 
 
+/*
 int main(int argc, char *argv[])
 {
     string as;    
     return 0;
 }
+*/

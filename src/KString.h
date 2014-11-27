@@ -11,7 +11,7 @@
 
 #ifndef NDEBUG
     #include <stdlib.h>
-    //TODO: asserts should use exceptions
+    // TODO: asserts should use exceptions
     #define ASSERT(a) (if(!(a)) (abort();))
 #else
     #define ASSERT(a)
