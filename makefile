@@ -7,7 +7,7 @@ TESTF = test
 TESTSOURCES = $(TESTF)/KStringTest.cpp
 
 tests:	KStringTest.o
-	$(CC) $(LDFLAGS) KStringTest.o KString.o KTest.o -o tests
+	$(CC) $(LDFLAGS) KStringTest.o KString.o KTest.o -o run_tests
 
 KStringTest.o: KTest.o KString.o $(TESTSOURCES)
 	$(CC) $(CFLAGS) test/KStringTest.cpp
@@ -17,3 +17,6 @@ KTest.o: $(TESTF)/KTest/KTest.cpp  $(TESTF)/KTest/KTest.h
 
 KString.o: $(SOURCES)
 	$(CC) $(CFLAGS) $(SOURCES)
+
+clean:
+	rm -rf *.o run_tests
