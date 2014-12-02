@@ -1,38 +1,40 @@
-#include <iostream>
-
 #include "KTest.h"
 
-namespace ktesting {
+namespace ktest {
 
-/**
- * UnitTest
- */
-void UnitTest::run() {
-    std::cout << "UnitTest Running:" << std::endl;
-    for (unsigned i = 0; i < testCases.size(); ++i) {
-        std::cout << "TestCase " << i << ": ";
-        // run test
-        std::cout << std::endl;
+
+Test::Test( const char *test_case_name, 
+            const char *test_name) : parentName{ test_case_name},
+                                     testName{ test_name } {
+    
+}
+
+void Test::testCode() { 
+    std::cerr << "Running default testCode of " << testName << std::endl;
+}
+
+
+void TestCase::registerAndCreate() {
+}
+
+
+UnitTest *UnitTest::instance = nullptr;
+bool UnitTest::initialised = false;
+UnitTest::UnitTest(){}
+
+UnitTest* UnitTest::Get() {
+    if( !instance) {
+        instance = new UnitTest;
+    }
+    return instance;
+}
+
+
+void UnitTest::Run() {
+    if( !initialised) {
     }
 }
 
 
-/**
- * TestCase
- */
-void TestCase::run() {
-    //std::cout << "   TestCase:"  << std::endl;
-    for (unsigned i = 0; i < tests.size(); ++i) {
-        std::cout << "    Test: ";
-        // run test
-        std::cout << std::endl;
-    }
-}
 
-
-AssertionResult CompareIntEQ( int a, int b ) {
-    return (a == b) ? AssertionResult(true) : AssertionResult(false);
-}
-
-
-} // namespace ktesting
+} // namespace ktest

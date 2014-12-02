@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -c -Wall -Werror -Wno-unused-variable -std=c++11
+CFLAGS = -c -Wall -Werror -Wno-unused-variable -Wno-parentheses -std=c++11
 LDFLAGS = 
 SRCF = src
 SOURCES =$(SRCF)/KString.cpp $(SRCF)/KString.h
@@ -7,7 +7,7 @@ TESTF = test
 TESTSOURCES = $(TESTF)/KStringTest.cpp
 
 tests:	KStringTest.o
-	$(CC) $(LDFLAGS) KStringTest.o KString.o -o tests
+	$(CC) $(LDFLAGS) KStringTest.o KString.o KTest.o -o tests
 
 KStringTest.o: KTest.o KString.o $(TESTSOURCES)
 	$(CC) $(CFLAGS) test/KStringTest.cpp

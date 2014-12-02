@@ -4,10 +4,8 @@
  * Cannot use standard containers.
  *
  */
-#ifndef KSTRING_H
-#define KSTRING_H
-
-#define INIT_LENGTH 4
+#ifndef KSTRING_H_
+#define KSTRING_H_
 
 #ifndef NDEBUG
     #include <stdlib.h>
@@ -17,26 +15,46 @@
     #define ASSERT(a)
 #endif
 
+namespace kms {
 
 class string {
-
-    unsigned int size;
-    char *str;
-
+    /**
+     * buffer_size
+     * Size of the internal buffer
+     */
+    unsigned buffer_size;
+    /**
+     * length
+     */
+    unsigned length;
+    /**
+     * *strBuf
+     * pointer to the stored char array
+     */
+    char *strBuf;
+ 
     //check();
-    public:
-        string();
-        ~string();
-        //string(char *);
-        //push_back();
-        //pop_back();
-        //insert();
-        //erase();
-        //swap();
-        
-        //char operator[]
-        //operator=
-        //input output operations(?)
+    //
+public:
+    string();
+    string(const char *);
+    ~string();
+    //push_back();
+    //pop_back();
+    //insert();
+    //erase();
+    //swap();
+    
+    //char operator[]
+    //operator=
+    //input output operations(?)
+    friend unsigned strlen( string );
 };
 
-#endif /* end of include guard: KSTRING_H */
+
+unsigned strlen( const char *);
+void strcpy( char *, const char *);
+
+} // namespace kms
+
+#endif // KTEST_H_

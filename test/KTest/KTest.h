@@ -1,21 +1,25 @@
+#ifndef KTEST_H_
+#define KTEST_H_
 
 #include <vector>
+#include <iostream>
+#include <string>
 
-#define ASSERT_INT_EQ(a,b) \
-    ::ktesting::CompareIntEQ((a), (b))
+// TODO: Check needed permission
 
+namespace ktest {
 
-namespace ktesting {
+class Test;
+class TestCase;
+class UnitTest;
 
 
 /**
  * AssertionResult
  */
-class AssertionResult {
-    bool assertion;
-
-public:
-    AssertionResult(bool b) : assertion{b} {};
+struct AssertionResult {
+    bool assert;
+    AssertionResult(bool b) : assert{b} {};
 };
 
 /**
@@ -23,44 +27,65 @@ public:
  * Has all the information returned from a test
  */
 struct TestResult {
-    bool assertions;
+    std::vector<AssertionResult> asserts;
 };
 
+
+#define KTEST( test_case_name, test_name )\
+    class test_name : Test {\
+        test_name() : Test( #test_case_name, #test_name)\
+        friend test_case_name;\
+    };\
+    test_case_name::registerAndCreate();\
+    test_name::testCode()
 
 /**
  * Test
  */
-class Test {};
-
+class Test {
+    const char * parentName;
+    const char * testName;
+    Test( const char *, const char * );
+    virtual void testCode();
+};
 
 /**
  * TestCase
  */
 class TestCase {
-
     std::vector<Test> tests;
-
+    void registerAndCreate();
+protected:
+    void SetUp();
+    void TearDown();
+    std::string name;
 public:
-    void run();
+    TestCase();
+    ~TestCase();
+    friend Test;
 };
-
 
 /**
  * UnitTest
- * A collection of TestCases.
- * Your ClassnameTest.cpp should inherit from this class.
+ * singleton
  */
 class UnitTest {
-
+    
     std::vector<TestCase> testCases;
-
+    static UnitTest* instance;
+    static bool initialised;
+    UnitTest();
 public:
-    /**
-     * run()
-     * Run all tests included in the Unit
-     */
-    void run();
+    static UnitTest* Get();
+    void Run();
 };
 
 
-} // namespace ktesting
+} // namespace ktest
+
+inline void RunAllTests() {
+    ::ktest::UnitTest::Get()->Run();
+}
+
+
+#endif // KTEST_H_
