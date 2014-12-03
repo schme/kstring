@@ -1,6 +1,10 @@
 #ifndef KTEST_H_
 #define KTEST_H_
 
+#include <iostream>
+
+#define ASSERT_TRUE( cond ) std::cout << ((cond) ? true : false) << std::endl
+
 
 namespace ktest {
 
@@ -65,6 +69,7 @@ void RunAllTests();
 
 
 } // namespace ktest
+
 
 #define KTEST( test_case, test)\
 class test_case##test##Helper : public test_case {\

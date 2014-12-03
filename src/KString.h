@@ -52,6 +52,7 @@ public:
 };
 
 
+unsigned strlen( string str);
 unsigned strlen( const char *);
 void strcpy( char *, const char *);
 

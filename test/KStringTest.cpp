@@ -11,16 +11,18 @@ class KStringTest {
     ~KStringTest() {
     }
     */
-
+protected:
+    kms::string str1;
 };
 
 
 KTEST( KStringTest, DefaultConstructor ) {
-    //
+    ASSERT_TRUE( kms::strlen( str1) == 0);
+    ASSERT_TRUE( kms::strlen( str1) == 1);
 }
 
 
-KTEST( KStringTest, CstyleStringConstructor) {
+KTEST( KStringTest, CStyleStringConstructor) {
     //
 }
 
