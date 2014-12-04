@@ -2,29 +2,34 @@
 #include "KTest/KTest.h"
 
 
-class KStringTest {
-
-    /*
-    KStringTest() {
+struct KStringTest : ktest::TestCase {
+    
+    void SetUp() {
+        kms::string str3("This goes in str3");
+    }
+    void TearDown() {
     }
 
-    ~KStringTest() {
-    }
-    */
 protected:
+    // variables here
     kms::string str1;
+    kms::string str2 = "Hello my ragtime gal!";
+    kms::string str3;
 };
 
 
-KTEST( KStringTest, DefaultConstructor ) {
-    ASSERT_TRUE( kms::strlen( str1) == 0);
-    ASSERT_TRUE( kms::strlen( str1) == 1);
+KTEST( KStringTest, StrlenFunctions ) {
+
+    ASSERT_EQ( 0, kms::strlen(""));
+    ASSERT_EQ( 0, kms::strlen( str1));
 }
 
 
-KTEST( KStringTest, CStyleStringConstructor) {
-    //
+KTEST( KStringTest, BasicConstructors ) {
+
+    //ASSERT_TRUE(!(0 != kms::strlen( str1)));
 }
+
 
 
 int main(int argc, char *argv[])
