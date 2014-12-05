@@ -8,11 +8,10 @@ namespace kms {
  * string::string()
  * Default constructor
  */
-string::string() : buffer_size{0},
-                   length{0},
-                   strBuf{nullptr}
-{
-}
+string::string() :  strBuf{nullptr},
+                    buffer_size{0},
+                    length{0}
+{ }
 
 
 /**
@@ -20,47 +19,41 @@ string::string() : buffer_size{0},
  */
 string::string(const char *array) : length{ strlen(array)}
 {
-    if( length >= buffer_size) {
-        realloc( length + 1);
-    }
+    allocate();
     strcpy( strBuf, array);
 }
 
 
-string::string( string const& s) : length{s.length}
+string::string( string const& rhs) : length{rhs.length}
 {
-    if( length >= buffer_size) {
-        realloc( length + 1);
-    }
-    strcpy( strBuf, s.strBuf);
+    allocate();
+    strcpy( strBuf, rhs.strBuf);
 }
 
 
 string::~string() {
-    delete strBuf;
+    if( strBuf ) {
+        delete strBuf;
+    }
 }
 
 
-void string::realloc(uint32 min) {
+void string::allocate() {
+    buffer_size = length + 1;
+    strBuf = new char[buffer_size];
+    *strBuf = '\0';
+}
 
-    if( buffer_size ) {
-        delete strBuf;
-    }
+void string::realloc(uint32 min) {
 
     buffer_size = ( buffer_size*2 >= min) ? buffer_size*2 : min;
     char *newBuf = new char[buffer_size];
 
+    delete strBuf;
     strBuf = newBuf;
     *strBuf = '\0';
 }
 
-
-/**
- * Outside the string
- */
-uint32 strlen( string str) {
-    return str.length;
-}
 
 uint32 strlen( const char *array) {
     uint32 len= 0;

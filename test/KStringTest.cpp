@@ -21,7 +21,7 @@ protected:
 KTEST( KStringTest, StrlenFunctions ) {
 
     ASSERT_EQ( 0, kms::strlen(""));
-    ASSERT_EQ( 0, kms::strlen( str1));
+    ASSERT_EQ( 0, str1.size());  // Why is copy constructor called here?
 }
 
 

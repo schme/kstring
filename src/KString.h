@@ -15,6 +15,7 @@ namespace kms {
 
 class string {
 
+    char *strBuf;
     /**
      * buffer_size
      * Size of buffer in bytes
@@ -26,14 +27,16 @@ class string {
      * Length of the actual string
      */
     uint32 length;
-    char *strBuf;
+
     /**
      * realloc( uint32)
      * Leaves garbage to the string
      */
     void realloc( uint32);
+    void allocate();
 
 public:
+    uint32 size() const { return length; }
     //void push_back( const char *);
     //pop_back();
     //insert();
@@ -44,15 +47,17 @@ public:
     //operator=
     //input output operations(?)
     
-    /**
-     * needs access to length
-     */
-    friend uint32 strlen( string);
-
 public:
+    /* Default constructor */
     string();
+
+    /* Char array constructor */
     string(const char *);
+
+    /* Copy constructor */
     string( string const&);
+
+    /* Destructor */
     ~string();
 
 };
