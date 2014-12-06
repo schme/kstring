@@ -38,6 +38,7 @@ class string {
 public:
     string();
     string(const char *);
+    //string( const char &*);
     ~string();
     //push_back();
     //pop_back();
@@ -53,7 +54,6 @@ public:
 
 
 unsigned strlen( string str);
-unsigned strlen( const char *);
 void strcpy( char *, const char *);
 
 } // namespace kms

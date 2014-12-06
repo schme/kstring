@@ -34,6 +34,13 @@ string::string(const char *array) {
 }
 
 
+/*
+string::string(const char *&array) {
+    strlen(
+    if( buffer_size <= 
+}
+*/
+
 
 /*
 void string::check() {
@@ -41,8 +48,9 @@ void string::check() {
 */
 
 string::~string() {
-    delete[] strBuf;
+    delete strBuf;
 }
+
 
 unsigned strlen( string str) {
     return str.length;
