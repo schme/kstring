@@ -57,9 +57,14 @@ public:
     /* Copy constructor */
     string( string const&);
 
+    /* Move constructor */
+    // string( string &&rhs);
+
     /* Destructor */
     ~string();
 
+public:
+    /* Move assignment */
 };
 
 
