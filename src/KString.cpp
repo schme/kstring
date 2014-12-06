@@ -8,44 +8,29 @@ namespace kms {
  * string::string()
  * Default constructor
  */
-string::string() : buffer_size{8}
-{
-    length = 0;
-    strBuf = new char[buffer_size];
-    *strBuf = '\0';
-}
+string::string() :  strBuf{nullptr},
+                    buffer_size{0},
+                    length{0}
+{ }
 
 
 /**
  * string::string(const char *)
  */
-string::string(const char *array) {
-
-    unsigned length = 0;
-    // Get length of char array
-    const char *ptr = array;
-    while( *ptr++) { ++length; }
-
-    buffer_size = length + 1;
-    strBuf = new char[buffer_size];
-
-    // Copy content of *a
+string::string(const char *array) : length{ strlen(array)}
+{
+    allocate();
     strcpy( strBuf, array);
 }
 
 
-/*
-string::string(const char *&array) {
-    strlen(
-    if( buffer_size <= 
-}
-*/
 
-
-/*
-void string::check() {
+string::string( string const& rhs) : length{rhs.length}
+{
+    allocate();
+    strcpy( strBuf, rhs.strBuf);
 }
-*/
+
 
 string::~string() {
     delete strBuf;
@@ -56,14 +41,35 @@ unsigned strlen( string str) {
     return str.length;
 }
 
-unsigned strlen( const char *array) {
-    unsigned i = 0;
-    while( *array++) { ++i; }
-    return i;
+
+void string::allocate() {
+    buffer_size = length + 1;
+    strBuf = new char[buffer_size];
+    *strBuf = '\0';
+}
+
+void string::realloc(uint32 min) {
+
+    buffer_size = ( buffer_size*2 >= min) ? buffer_size*2 : min;
+    char *newBuf = new char[buffer_size];
+
+    delete strBuf;
+    strBuf = newBuf;
+    *strBuf = '\0';
+}
+
+
+uint32 strlen( const char *array) {
+    uint32 len= 0;
+    const char *ptr = array;
+    while( *ptr++) {++len;}
+    return len;
 }
 
 void strcpy( char *to, const char *from) {
-    while( *to++ = *from++) {}
+    const char *pfrom  = from;
+    char *pto = to;
+    while( *pto++ = *pfrom++) {}
 }
 
 

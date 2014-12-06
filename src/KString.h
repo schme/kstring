@@ -1,46 +1,48 @@
-/*
- *
- * NOTE:
- * Cannot use standard containers.
- *
- */
 #ifndef KSTRING_H_
 #define KSTRING_H_
 
 #ifndef NDEBUG
-    #include <stdlib.h>
-    // TODO: asserts should use exceptions
-    #define ASSERT(a) (if(!(a)) (abort();))
-#else
-    #define ASSERT(a)
+    #include "../test/debug.h"
 #endif
+
+#include <cinttypes>
+
+typedef uint32_t uint32;
+
 
 namespace kms {
 
+
 class string {
+
+    char *strBuf;
     /**
      * buffer_size
-     * Size of the internal buffer
+     * Size of buffer in bytes
      */
-    unsigned buffer_size;
+    uint32 buffer_size;
+
     /**
      * length
+     * Length of the actual string
      */
-    unsigned length;
+    uint32 length;
+
     /**
-     * *strBuf
-     * pointer to the stored char array
+     * realloc( uint32)
+     * Leaves garbage to the string
      */
-    char *strBuf;
- 
-    //check();
-    //
+    void realloc( uint32);
+    void allocate();
+
 public:
     string();
     string(const char *);
     //string( const char &*);
     ~string();
     //push_back();
+    uint32 size() const { return length; }
+    //void push_back( const char *);
     //pop_back();
     //insert();
     //erase();
@@ -49,11 +51,33 @@ public:
     //char operator[]
     //operator=
     //input output operations(?)
-    friend unsigned strlen( string );
+    
+public:
+    /* Default constructor */
+    string();
+
+    /* Char array constructor */
+    string(const char *);
+
+    /* Copy constructor */
+    string( string const&);
+
+    /* Move constructor */
+    // string( string &&rhs);
+
+    /* Destructor */
+    ~string();
+
+public:
+    /* Move assignment */
 };
 
 
-unsigned strlen( string str);
+uint32 strlen( string str);
+/**
+ * parameter should be null terminated
+ */
+uint32 strlen( const char *);
 void strcpy( char *, const char *);
 
 } // namespace kms

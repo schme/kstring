@@ -2,31 +2,38 @@
 #include "KTest/KTest.h"
 
 
-class KStringTest {
-public:
-protected:
-    kms::string str1;
+struct KStringTest : ktest::TestCase {
+    
+    void SetUp() {
+        kms::string str3("This goes in str3");
+    }
+    void TearDown() {
+    }
 
-    KStringTest() {
-    }
-    ~KStringTest() {
-    }
+protected:
+    // variables here
+    kms::string str1;
+    kms::string str2 = "Hello my ragtime gal!";
+    kms::string str3;
 };
 
 
-KTEST( KStringTest, DefaultConstructor ) {
-//    ASSERT_TRUE( 1 == strlen( kms::string str2("Hello my baby hello my honey hello my ragtime gal!")));
-    ASSERT_TRUE( true );
+KTEST( KStringTest, StrlenFunctions ) {
+
+    ASSERT_EQ( 0, kms::strlen(""));
+    ASSERT_EQ( 0, str1.size());  // Why is copy constructor called here?
 }
 
 
-KTEST( KStringTest, CStyleStringConstructor) {
-    //
+KTEST( KStringTest, BasicConstructors ) {
+
+    //ASSERT_TRUE(!(0 != kms::strlen( str1)));
 }
 
 struct Foo {
     int x;
 };
+
 
 int main(int argc, char *argv[])
 {
