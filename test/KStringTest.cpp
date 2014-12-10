@@ -22,6 +22,7 @@ KTEST( KStringTest, StrlenFunctions ) {
 
     ASSERT_EQ( 0, kms::strlen(""));
     ASSERT_EQ( 0, str1.size());  // Why is copy constructor called here?
+    ASSERT_EQ( 12, str2.size());
 }
 
 
@@ -30,14 +31,9 @@ KTEST( KStringTest, BasicConstructors ) {
     //ASSERT_TRUE(!(0 != kms::strlen( str1)));
 }
 
-struct Foo {
-    int x;
-};
-
 
 int main(int argc, char *argv[])
 {
-    Foo();
 
     ktest::RunAllTests();
     return 0;

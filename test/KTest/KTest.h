@@ -5,19 +5,22 @@
 #include "../debug.h"
 
 #include <iostream>
+#include <string>
 
 #define ASSERT_TRUE( cond ) std::cout << ((cond) ? true : false) << std::endl
 
 #define ASSERT_FALSE( cond ) std::cout << ((cond) ? false : true) << std::endl
 
-#define ASSERT_EQ( expectation, reality )\
-    std::cout << (((expectation) == (reality)) ? true : false) << std::endl
-
-#define CREATE_ASSERT_EQ( expectation, reality, file, line)\
+#define ASSERT_EQ( expectation, reality)\
+    PrintAssert( ktest::AssertEQ( #expectation, #reality, expectation, reality))
 
 
+#define ASSERT_EQ_FAIL_MSG( expectation, reality, val1, val2)\
+    << "Expected: (" << expectation << ") == (" << reality << "), actual: "\
+    << EqToString( val1, val2)
 
 namespace ktest {
+
 
 const static bool print_assert_success = true;
 
@@ -34,10 +37,35 @@ struct AssertResult {
 };
 
 std::ostream& operator<< (std::ostream &, AssertResult);
+AssertResult& operator<< (AssertResult &, const char *);
 
+AssertResult AssertTrue(const char *);
+AssertResult AssertFalse(const char *);
 
 void PrintAssert( AssertResult);
 void PrintTestHeader( Test &);
+
+template <typename T>
+AssertResult AssertEQ( const char *expectation, const char *reality, T val1, T val2) {
+    if( val1 == val2) {
+        return AssertTrue(reality);
+    } else {
+        return AssertFalse("")\
+            ASSERT_EQ_FAIL_MSG( expectation, reality, val1, val2);
+    }
+}
+
+template <typename T>
+std::string EqToString( T val1, T val2) {
+    std::string ret;
+    return ret( val1 << " == " << val2);
+}
+
+template <typename T>
+std::string toString( T val) {
+    std::string ret;
+    return ret(val);
+}
 
 /**
  * TestList
@@ -64,8 +92,6 @@ public:
 };
 
 
-
-
 /**
  * Test
  */
@@ -88,16 +114,20 @@ public:
  */
 class TestCase {
 protected:
+    void addAssert( );
+
     virtual void SetUp(){};
     virtual void TearDown(){};
     TestCase(){};
     ~TestCase(){};
 public:
+
     virtual void run(){};
 };
 
 
 inline void TestList::add( Test *test) {
+
     if( listBack == nullptr) {
         listFront = test;
         listBack = test;
@@ -107,7 +137,8 @@ inline void TestList::add( Test *test) {
     }
 }
 
-// TODO: Check if templates are necessary
+
+
 
 void execute( TestCase &);
 

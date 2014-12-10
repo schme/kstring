@@ -37,11 +37,6 @@ string::~string() {
 }
 
 
-unsigned strlen( string str) {
-    return str.length;
-}
-
-
 void string::allocate() {
     buffer_size = length + 1;
     strBuf = new char[buffer_size];
@@ -58,8 +53,7 @@ void string::realloc(uint32 min) {
     *strBuf = '\0';
 }
 
-
-uint32 strlen( const char *array) {
+int strlen( const char *array) {
     uint32 len= 0;
     const char *ptr = array;
     while( *ptr++) {++len;}

@@ -26,7 +26,7 @@ class string {
      * length
      * Length of the actual string
      */
-    uint32 length;
+    int length;
 
     /**
      * realloc( uint32)
@@ -36,12 +36,8 @@ class string {
     void allocate();
 
 public:
-    string();
-    string(const char *);
-    //string( const char &*);
-    ~string();
     //push_back();
-    uint32 size() const { return length; }
+    int size() const { return length; }
     //void push_back( const char *);
     //pop_back();
     //insert();
@@ -73,11 +69,11 @@ public:
 };
 
 
-uint32 strlen( string str);
+int strlen( string str);
 /**
  * parameter should be null terminated
  */
-uint32 strlen( const char *);
+int strlen( const char *);
 void strcpy( char *, const char *);
 
 } // namespace kms

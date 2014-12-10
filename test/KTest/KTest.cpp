@@ -13,6 +13,12 @@ TestList& Test::getList() {
     return list;
 }
 
+AssertResult AssertTrue(const char *msg) {
+    return AssertResult( msg, true);
+}
+AssertResult AssertFalse(const char *msg) {
+    return AssertResult( msg, false);
+}
 
 void RunAllTests() {
     TestList list = Test::getList();
@@ -26,8 +32,15 @@ void RunAllTests() {
 
 
 std::ostream& operator<< (std::ostream &out, AssertResult ar) {
-    out << std::toupper( ar.result_ ) << ": " << ar.msg_;
+    out << ((ar.result_) ? "SUCCESS" : "FAIL") << ": " << ar.msg_;
     return out;
+}
+
+AssertResult& operator<< (AssertResult &ar, const char *msg) {
+    std::string s( ar.msg_);
+    s += msg;
+    ar.msg_ = s.substr();
+    return ar;
 }
 
 
